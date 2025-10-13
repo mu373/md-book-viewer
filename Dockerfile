@@ -27,7 +27,7 @@ RUN if [ ! -d "./books" ]; then \
       exit 1; \
     fi
 
-RUN pnpm build:docker
+RUN pnpm build
 
 # Production stage
 FROM base AS runner
