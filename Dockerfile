@@ -15,8 +15,8 @@ RUN pnpm install --frozen-lockfile
 # Copy source code
 COPY . .
 
-# Build the application
-RUN pnpm build
+# Build the application (use build:docker to avoid turbopack issues)
+RUN pnpm build:docker
 
 # Production stage
 FROM node:20-alpine AS runner
