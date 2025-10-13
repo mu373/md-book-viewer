@@ -206,7 +206,7 @@ npx tsc --noEmit
 ```
 
 
-### Building
+### Building for Static Deployment
 
 This application is configured for **static export** - all pages are pre-rendered as HTML files at build time. The `out/` directory contains fully static files that can be deployed anywhere:
 
@@ -215,15 +215,57 @@ pnpm build
 # Deploy out/ directory to your hosting
 ```
 
+## Docker Deployment
+
+The application includes Docker support with a multi-stage build that uses **bun + hono** for efficient static file serving.
+
+### Building and Running with Docker
+
+1. **Ensure books are available**: Docker `COPY` doesn't follow symlinks, so you must have actual book files in the `books/` directory (not just symlinks).
+
+2. **Start with Docker Compose** (recommended):
+```bash
+docker compose up -d
+```
+
+This will build the image and start the container in detached mode.
+
+3. **View logs**:
+```bash
+docker compose logs -f
+```
+
+4. **Stop the container**:
+```bash
+docker compose down
+```
+
+5. **Access the application**: Open [http://localhost:3000](http://localhost:3000)
+
+### Docker Build Process
+
+The [Dockerfile](Dockerfile) implements a two-stage build:
+
+1. **Build stage** ([Dockerfile:8-30](Dockerfile#L8-L30)):
+   - Installs dependencies with pnpm
+   - Validates that `books/` directory exists with actual content
+   - Runs `pnpm build` to generate static files in `out/`
+
+2. **Production stage** ([Dockerfile:33-49](Dockerfile#L33-L49)):
+   - Uses lightweight Bun runtime
+   - Copies only the `out/` directory and server files
+   - Runs [server.ts](server.ts) with Bun for optimized static serving
 
 ## Technologies Used
 
-- **Next.js 15** - React framework with App Router
+- **Next.js 15** - React framework with App Router and static export
 - **TypeScript** - Type safety
 - **Tailwind CSS 4** - Styling
 - **KaTeX** - Math rendering
 - **Remark/Rehype** - Markdown processing
 - **Unified** - Content transformation
+- **Bun** - Fast JavaScript runtime for production serving (Docker)
+- **Hono** - Lightweight web framework for static file serving (Docker)
 
 ## License
 MIT License.
