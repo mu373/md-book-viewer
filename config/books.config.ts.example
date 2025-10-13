@@ -4,15 +4,20 @@
  * Add paths to your book repositories here. Each book repository should contain
  * a `book.json` file in its root directory with metadata about the book.
  *
- * Paths can use ~ for home directory (will be expanded automatically).
+ * Supported path formats:
+ * - Relative paths: './books/mybook' (relative to project root)
+ * - Home directory: '~/Books/mybook' (expanded automatically)
+ * - Absolute paths: '/absolute/path/to/book'
  *
- * Example:
+ * Examples:
  * export const BOOKS_CONFIG = [
- *   '~/Books/my-book-1',
+ *   './books/mybook',              // Relative path (recommended for books in project)
+ *   '~/Documents/another-book',    // Home directory path
+ *   '/var/books/external-book',    // Absolute path
  * ]
  */
 
 export const BOOKS_CONFIG: string[] = [
-  '~/Books/my-book-1',
+  './books/mybook',
   // Add more book paths here
 ]

@@ -51,17 +51,29 @@ pnpm start
 
 ## Configuration
 
-### Adding Books
+### Setting up books.config.ts
 
-Books are configured in [`config/books.config.ts`](config/books.config.ts). Add paths to your book repositories:
+1. Copy the example configuration file:
+```bash
+cp config/books.config.ts.example config/books.config.ts
+```
+
+2. Edit `config/books.config.ts` to add paths to your book repositories:
 
 ```typescript
 export const BOOKS_CONFIG: string[] = [
-  '~/path/to/your-book-repository',
-  '~/path/to/another-book',
-  // Add more book paths...
+  './books/mybook',              // Relative path (recommended for books in project)
+  '~/Documents/another-book',    // Home directory path
+  '/absolute/path/to/book',      // Absolute path
 ]
 ```
+
+**Supported path formats:**
+- **Relative paths**: `./books/mybook` - relative to project root (recommended for books stored in the project)
+- **Home directory**: `~/Books/mybook` - uses your home directory (expanded automatically)
+- **Absolute paths**: `/var/books/mybook` - full system path
+
+**Note**: `config/books.config.ts` is in `.gitignore` to keep your local book paths private.
 
 ### Book Metadata Format
 
