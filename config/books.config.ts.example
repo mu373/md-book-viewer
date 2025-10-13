@@ -1,0 +1,18 @@
+/**
+ * Book Configuration
+ *
+ * Add paths to your book repositories here. Each book repository should contain
+ * a `book.json` file in its root directory with metadata about the book.
+ *
+ * Paths can use ~ for home directory (will be expanded automatically).
+ *
+ * Example:
+ * export const BOOKS_CONFIG = [
+ *   '~/Books/my-book-1',
+ * ]
+ */
+
+export const BOOKS_CONFIG: string[] = [
+  '~/Books/my-book-1',
+  // Add more book paths here
+]

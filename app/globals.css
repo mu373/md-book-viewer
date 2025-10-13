@@ -1,0 +1,399 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Book-specific styles */
+@import "../book.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* Japanese text indentation support */
+.indent-ja {
+  text-indent: 1em;
+}
+
+/* Japanese text typography */
+[lang="ja"] {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  line-height: 1.5em;
+  letter-spacing: 0.01em;
+}
+
+/* Math rendering styles */
+code.language-math {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+}
+
+/* Display math in pre tags */
+pre code.language-math {
+  display: block !important;
+}
+
+pre:has(code.language-math) {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  margin: 1em 0 !important;
+  overflow: visible !important;
+}
+
+/* Improve math rendering in dark mode */
+@media (prefers-color-scheme: dark) {
+  .katex {
+    color: var(--foreground);
+  }
+}
+
+.dark code.language-math {
+  background: transparent !important;
+}
+
+.dark pre:has(code.language-math) {
+  background: transparent !important;
+}
+
+:root {
+  --radius: 0.375rem;
+  /* Pure white background for light mode with neutral grays */
+  --background: #ffffff;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #0969da;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+  --destructive: #dc2626;
+  --border: #ececec;
+  --input: #e5e5e5;
+  --ring: #0969da;
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: #f5f5f5;
+  --sidebar-foreground: #171717;
+  --sidebar-primary: #0969da;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ffffff;
+  --sidebar-accent-foreground: #171717;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #0969da;
+}
+
+.dark {
+  /* Pure neutral grays for dark mode */
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #171717;
+  --card-foreground: #fafafa;
+  --popover: #171717;
+  --popover-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #171717;
+  --secondary: #262626;
+  --secondary-foreground: #fafafa;
+  --muted: #262626;
+  --muted-foreground: #a3a3a3;
+  --accent: #262626;
+  --accent-foreground: #fafafa;
+  --destructive: #dc2626;
+  --border: #262626;
+  --input: #262626;
+  --ring: #737373;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: #171717;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #fafafa;
+  --sidebar-primary-foreground: #171717;
+  --sidebar-accent: #262626;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #262626;
+  --sidebar-ring: #737373;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  /* Disable all transitions */
+  * {
+    transition: none !important;
+  }
+
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 14px;
+  }
+}
+
+/* GitHub-like Markdown styles */
+.markdown-content {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #24292f;
+}
+
+.markdown-content h1 {
+  font-size: 2em;
+  font-weight: 600;
+  padding-bottom: 0.3em;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.markdown-content h2 {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  padding-bottom: 0.1em;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.markdown-content h3 {
+  font-size: 1.4em;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 16px;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.markdown-content h4 {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 4px;
+}
+
+.markdown-content h5,
+.markdown-content h6 {
+  font-size: 0.875em;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.markdown-content p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.markdown-content a {
+  color: #0969da;
+  text-decoration: none;
+}
+
+.markdown-content a:hover {
+  text-decoration: underline;
+}
+
+.markdown-content strong {
+  font-weight: 600;
+}
+
+.markdown-content code {
+  background-color: rgba(175, 184, 193, 0.2);
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+  font-size: 85%;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+.markdown-content pre {
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-content pre code {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 100%;
+}
+
+.markdown-content blockquote {
+  padding: 0 1em;
+  color: #57606a;
+  border-left: 0.25em solid #d0d7de;
+  margin: 0 0 16px 0;
+}
+
+.markdown-content ul {
+  list-style-type: disc;
+  padding-left: 2em;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-content ol {
+  list-style-type: decimal;
+  padding-left: 2em;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-content li {
+  margin-top: 0.25em;
+}
+
+.markdown-content table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-content table tr {
+  background-color: #ffffff;
+  border-top: 1px solid #d0d7de;
+}
+
+.markdown-content table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+  padding: 6px 13px;
+  border: 1px solid #d0d7de;
+}
+
+.markdown-content table th {
+  font-weight: 600;
+  background-color: #f6f8fa;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  box-sizing: content-box;
+  /* background-color: #ffffff; */
+}
+
+.markdown-content hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #d0d7de;
+  border: 0;
+}
+
+/* Dark mode adjustments */
+.dark .markdown-content {
+  color: #c9d1d9;
+}
+
+.dark .markdown-content {
+  h2, h3 {
+    border-bottom-color: #21262d;
+  }
+}
+
+.dark .markdown-content a {
+  color: #58a6ff;
+}
+
+.dark .markdown-content code {
+  background-color: rgba(110, 118, 129, 0.4);
+}
+
+.dark .markdown-content pre {
+  background-color: #161b22;
+}
+
+.dark .markdown-content blockquote {
+  color: #8b949e;
+  border-left-color: #3b434b;
+}
+
+.dark .markdown-content table tr {
+  background-color: #0d1117;
+  border-top-color: #21262d;
+}
+
+.dark .markdown-content table tr:nth-child(2n) {
+  background-color: #161b22;
+}
+
+.dark .markdown-content table th,
+.dark .markdown-content table td {
+  border-color: #21262d;
+}
+
+.dark .markdown-content table th {
+  background-color: #161b22;
+}
+
+.dark .markdown-content hr {
+  background-color: #21262d;
+}

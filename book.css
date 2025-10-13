@@ -1,0 +1,11 @@
+.algorithm, .definition, .problem, .theorem, .proposition, .proof, .supplement, .figure, .example {
+    padding: 1.5em 1.5em 0.5em 1.5em;
+    border: 1px solid var(--border);
+    margin-bottom: 1em;
+    border-radius: 6px;
+}
+
+.algorithm-heading, .definition-heading, .problem-heading, .theorem-heading, .proposition-heading, .proof-heading, .supplement-heading, .example-heading, .figure-heading {
+    font-weight: bold;
+    padding-bottom: 0.5em;
+}
