@@ -44,3 +44,5 @@ config/books.config.ts
 
 # docker
 docker-compose.yml
+
+books/
