@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    container_name: md_book_viewer
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    expose:
+      - 3000
+    networks:
+      - default
+      - traefik-nw
+    labels:
+      traefik.enable: true
+      traefik.docker.network: traefik-nw
+      traefik.http.routers.book.rule: Host(`foobar.example.com`)
+      traefik.http.routers.book.service: book
+      traefik.http.routers.book.entrypoints: websecure
+      traefik.http.routers.book.tls.certresolver: cloudflare
+      traefik.http.services.book.loadbalancer.server.port: 3000
+
+networks:
+  traefik-nw:
+    external: true

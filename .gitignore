@@ -41,3 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 config/books.config.ts
+
+# docker
+docker-compose.yml
