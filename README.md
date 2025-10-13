@@ -44,10 +44,16 @@ pnpm dev
 
 ### Building for Production
 
+The build process automatically copies images from book repositories to the output directory.
+
 ```bash
 pnpm build
-pnpm start
 ```
+
+The build process:
+1. Generates static HTML for all chapters
+2. Copies images from each book's `images/` directory to `out/{bookId}/images/`
+3. Maintains relative paths so `../images/` references work correctly
 
 ## Configuration
 
@@ -125,6 +131,30 @@ Each book repository must contain a `book.json` file in its root directory:
 - `description` (string, optional): Chapter description
 - `hidden` (boolean, optional): Hide from navigation
 
+### Book Repository Structure
+
+Each book repository should follow this structure:
+
+```
+book-repository/
+├── book.json           # Book metadata (required)
+├── chapters/           # Markdown files (required)
+│   ├── 01-intro.md
+│   ├── 02-chapter2.md
+│   └── ...
+└── images/            # Images referenced in markdown (optional)
+    ├── fig-1.png
+    └── ...
+```
+
+**Images**: Store images in an `images/` directory at the book root. Reference them in markdown with relative paths:
+
+```markdown
+![Description](../images/fig-1.png)
+```
+
+During build, images are automatically copied to the output directory maintaining the relative path structure, so `../images/` references work correctly from chapter pages.
+
 ## Project Structure
 
 ```
@@ -151,7 +181,13 @@ md-book-viewer/
 │   └── index.ts                 # Type definitions
 ├── config/                      # Configuration
 │   └── books.config.ts          # Book paths configuration
-└── public/                      # Static assets
+├── scripts/                     # Build and utility scripts
+│   ├── copy-book-images.js      # Copies images from books to output
+│   └── generate-book-json.js    # Generates book.json template
+└── out/                         # Static build output (after build)
+    └── [bookId]/
+        ├── images/              # Copied from book repo
+        └── [chapterId]/         # Chapter pages
 ```
 
 ## Markdown Features
