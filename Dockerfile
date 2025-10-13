@@ -29,18 +29,21 @@ RUN if [ ! -d "./books" ]; then \
 
 RUN pnpm build
 
-# Production stage
-FROM base AS runner
+# Production stage with Bun
+FROM oven/bun:1 AS runner
 WORKDIR /app
 
 # Copy built files from build stage
 COPY --from=build /usr/src/app/out ./out
 
-# Install serve to host static files
-RUN npm install -g serve
+# Copy server script and install dependencies
+COPY --from=build /usr/src/app/server.ts ./server.ts
+COPY --from=build /usr/src/app/package.json ./package.json
+COPY --from=build /usr/src/app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=build /usr/src/app/node_modules ./node_modules
 
 # Expose port
 EXPOSE 3000
 
-# Start the application
-CMD ["serve", "-s", "out", "-l", "3000"]
+# Start the application with Bun
+CMD ["bun", "run", "server.ts"]

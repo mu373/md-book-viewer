@@ -7,6 +7,7 @@
     "build": "next build --turbopack",
     "build:docker": "next build",
     "start": "next start",
+    "serve": "bun run server.ts",
     "lint": "eslint",
     "generate-book": "node scripts/generate-book-json.js"
   },
@@ -16,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
+    "hono": "^4.9.11",
     "lucide-react": "^0.545.0",
     "next": "15.5.4",
     "react": "19.1.0",
