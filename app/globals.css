@@ -335,7 +335,8 @@ pre:has(code.language-math) {
 }
 
 .markdown-content img {
-  max-width: 100%;
+  max-width: 70%;
+  margin: 0 auto;
   box-sizing: content-box;
   /* background-color: #ffffff; */
 }
