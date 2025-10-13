@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import type { Metadata } from 'next'
 import {
   getChapter,
   getChapterContent,
@@ -17,6 +18,24 @@ interface PageProps {
     bookId: string
     chapterId: string
   }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { bookId, chapterId } = await params
+  const result = getChapter(bookId, chapterId)
+
+  if (!result) {
+    return {
+      title: 'Chapter Not Found',
+    }
+  }
+
+  const { book, chapter } = result
+
+  return {
+    title: `${chapter.title} | ${book.title}`,
+    description: `${chapter.title} - ${book.title}`,
+  }
 }
 
 export default async function ChapterPage({ params }: PageProps) {
