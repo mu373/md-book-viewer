@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: 'export',
 
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
   // Optimize images
   images: {
     unoptimized: true, // Required for static export

@@ -1,31 +1,40 @@
+# Base stage with pnpm
+FROM node:22 AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
 # Build stage
-FROM node:20-alpine AS builder
-
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@10.17.1 --activate
-
-WORKDIR /app
-
-# Copy package files
-COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies
+FROM base AS build
+WORKDIR /usr/src/app
+COPY package*.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-# Copy source code
-COPY . .
+# Copy application code
+COPY . ./
 
-# Build the application (use build:docker to avoid turbopack issues)
+# Verify books directory exists with actual content (not just symlinks)
+# If books/ contains symlinks, they won't be followed by Docker COPY
+# You must copy actual book files before building the Docker image
+RUN if [ ! -d "./books" ]; then \
+      echo "ERROR: books/ directory not found."; \
+      echo "Please ensure books/ directory exists with actual book content before building."; \
+      exit 1; \
+    fi && \
+    if [ -z "$(ls -A ./books)" ]; then \
+      echo "ERROR: books/ directory is empty."; \
+      echo "Docker COPY doesn't follow symlinks. Copy actual book files before building."; \
+      exit 1; \
+    fi
+
 RUN pnpm build:docker
 
 # Production stage
-FROM node:20-alpine AS runner
-
+FROM base AS runner
 WORKDIR /app
 
-# Copy built files from builder
-COPY --from=builder /app/out ./out
-COPY --from=builder /app/package.json ./
+# Copy built files from build stage
+COPY --from=build /usr/src/app/out ./out
 
 # Install serve to host static files
 RUN npm install -g serve

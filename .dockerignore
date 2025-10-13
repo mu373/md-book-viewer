@@ -12,3 +12,7 @@ pnpm-debug.log*
 .DS_Store
 *.pem
 .vercel
+
+# Allow books directory for Docker build
+# Note: books/ is gitignored but needed for Docker build
+!books/
