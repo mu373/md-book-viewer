@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/copy-book-images.js dev",
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "build:docker": "next build",
+    "build": "next build --turbopack && node scripts/copy-book-images.js build",
+    "build:docker": "next build && node scripts/copy-book-images.js build",
     "start": "next start",
     "serve": "bun run server.ts",
     "lint": "eslint",
-    "generate-book": "node scripts/generate-book-json.js"
+    "generate-book": "node scripts/generate-book-json.js",
+    "copy-images": "node scripts/copy-book-images.js"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
