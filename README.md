@@ -215,6 +215,20 @@ pnpm build
 # Deploy out/ directory to your hosting
 ```
 
+### Testing the Static Build Locally
+
+After building, you can test the static export locally using the same bun+hono server that runs in production:
+
+```bash
+# Serve on default port (3000)
+pnpm serve
+
+# Serve on a custom port
+PORT=3010 pnpm serve
+```
+
+This runs [server.ts](server.ts) with Bun, providing the same caching behavior and routing as the Docker deployment.
+
 ## Docker Deployment
 
 The application includes Docker support with a multi-stage build that uses **bun + hono** for efficient static file serving.
