@@ -13,6 +13,23 @@ pnpm-debug.log*
 *.pem
 .vercel
 
+# Development files
+*.md
+.eslintrc*
+.prettierrc*
+jest.config*
+*.test.*
+*.spec.*
+__tests__/
+coverage/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
 # Allow books directory for Docker build
 # Note: books/ is gitignored but needed for Docker build
 !books/

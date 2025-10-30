@@ -1,5 +1,5 @@
 # Base stage with pnpm
-FROM node:22 AS base
+FROM node:22-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
@@ -30,17 +30,14 @@ RUN if [ ! -d "./books" ]; then \
 RUN pnpm build
 
 # Production stage with Bun
-FROM oven/bun:1 AS runner
+FROM oven/bun:alpine AS runner
 WORKDIR /app
 
 # Copy built files from build stage
 COPY --from=build /usr/src/app/out ./out
 
-# Copy server script and install dependencies
+# Copy server script
 COPY --from=build /usr/src/app/server.ts ./server.ts
-COPY --from=build /usr/src/app/package.json ./package.json
-COPY --from=build /usr/src/app/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=build /usr/src/app/node_modules ./node_modules
 
 # Expose port
 EXPOSE 3000
