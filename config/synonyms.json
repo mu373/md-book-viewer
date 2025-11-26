@@ -13,14 +13,12 @@
       "synonyms": ["ニューラルネットワーク", "neural network", "NN"]
     },
     {
-      "type": "oneWaySynonym",
-      "input": "ML",
-      "synonyms": ["機械学習", "machine learning"]
+      "type": "synonym",
+      "synonyms": ["ML", "機械学習", "machine learning"]
     },
     {
-      "type": "oneWaySynonym",
-      "input": "DL",
-      "synonyms": ["深層学習", "deep learning"]
+      "type": "synonym",
+      "synonyms": ["DL", "深層学習", "deep learning"]
     },
     {
       "type": "synonym",
@@ -47,24 +45,20 @@
       "synonyms": ["GAN", "敵対的生成ネットワーク", "Generative Adversarial Network"]
     },
     {
-      "type": "oneWaySynonym",
-      "input": "拡散モデル",
-      "synonyms": ["diffusion model", "Diffusion Model"]
+      "type": "synonym",
+      "synonyms": ["拡散モデル", "diffusion model"]
     },
     {
-      "type": "oneWaySynonym",
-      "input": "事後分布",
-      "synonyms": ["posterior", "posterior distribution"]
+      "type": "synonym",
+      "synonyms": ["事後分布", "posterior", "posterior distribution"]
     },
     {
-      "type": "oneWaySynonym",
-      "input": "事前分布",
-      "synonyms": ["prior", "prior distribution"]
+      "type": "synonym",
+      "synonyms": ["事前分布", "prior", "prior distribution"]
     },
     {
-      "type": "oneWaySynonym",
-      "input": "尤度",
-      "synonyms": ["likelihood"]
+      "type": "synonym",
+      "synonyms": ["尤度", "likelihood"]
     },
     {
       "type": "synonym",
@@ -95,9 +89,8 @@
       "synonyms": ["KL", "カルバック・ライブラー", "Kullback-Leibler"]
     },
     {
-      "type": "oneWaySynonym",
-      "input": "SNR",
-      "synonyms": ["信号対雑音比", "Signal-to-Noise Ratio"]
+      "type": "synonym",
+      "synonyms": ["SNR", "信号対雑音比", "Signal-to-Noise Ratio"]
     },
     {
       "type": "synonym",
