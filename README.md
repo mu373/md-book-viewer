@@ -317,9 +317,9 @@ The application supports full-text search powered by Algolia.
 
 2. Create a new application and index
 
-3. Copy `.env.example` to `.env.local` and fill in your credentials:
+3. Copy `.env.example` to `.env` and fill in your credentials:
 ```bash
-cp .env.example .env.local
+cp .env.example .env
 ```
 
 ```bash

@@ -19,10 +19,10 @@ import fs from 'fs'
 import path from 'path'
 import { chunkByHeadings } from '../lib/search-utils'
 
-// Load .env.local if it exists
-const envLocalPath = path.resolve(process.cwd(), '.env.local')
-if (fs.existsSync(envLocalPath)) {
-  const envContent = fs.readFileSync(envLocalPath, 'utf-8')
+// Load .env if it exists
+const envPath = path.resolve(process.cwd(), '.env')
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf-8')
   for (const line of envContent.split('\n')) {
     const trimmed = line.trim()
     if (trimmed && !trimmed.startsWith('#')) {
