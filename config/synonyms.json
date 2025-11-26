@@ -143,6 +143,18 @@
     {
       "type": "synonym",
       "synonyms": ["WL", "ワイスファイラー・リーマン検査", "Weisfeiler-Lehman"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["GD", "勾配降下法", "gradient descent"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["SGD", "確率的勾配降下法", "stochastic gradient descent"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["RMSE", "二乗平均平方根誤差", "Root Mean Squared Error"]
     }
   ]
 }
