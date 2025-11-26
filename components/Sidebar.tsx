@@ -7,6 +7,7 @@ import Navigation from './Navigation'
 import ThemeToggle from './ThemeToggle'
 import { Menu, X, PanelLeftClose, PanelLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import SearchButton from './SearchButton'
 
 interface SidebarProps {
   book: Book
@@ -41,6 +42,7 @@ export default function Sidebar({
 
       {/* Desktop Toggle Buttons - floats and changes icon based on state */}
       <div className="hidden lg:flex fixed bottom-4 left-4 z-50 gap-2">
+<SearchButton bookId={book.id} />
         <Button
           onClick={() => setIsCollapsed(!isCollapsed)}
           variant="outline"

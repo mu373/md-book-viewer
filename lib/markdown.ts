@@ -7,6 +7,7 @@ import rehypeRaw from 'rehype-raw'
 import rehypeStringify from 'rehype-stringify'
 import matter from 'gray-matter'
 import { remarkJapaneseIndent } from './remark-japanese-indent'
+import { remarkSingleLineBreaks } from './remark-single-line-breaks'
 import { remarkExtractTOC } from './toc'
 import type { ProcessedMarkdown, TOCHeading } from '@/types'
 
@@ -23,6 +24,7 @@ export async function processMarkdown(content: string): Promise<ProcessedMarkdow
   // Process markdown through the unified pipeline
   const result = await unified()
     .use(remarkParse) // Parse markdown
+    .use(remarkSingleLineBreaks) // Convert single line breaks to hard breaks
     .use(remarkMath) // Support math notation ($...$ and $$...$$)
     .use(remarkGfm) // GitHub Flavored Markdown (tables, strikethrough, etc.)
     .use(remarkJapaneseIndent) // Handle Japanese full-width space indentation
@@ -53,6 +55,7 @@ export function processMarkdownSync(content: string): ProcessedMarkdown {
   // Process markdown through the unified pipeline (sync)
   const result = unified()
     .use(remarkParse)
+    .use(remarkSingleLineBreaks)
     .use(remarkMath)
     .use(remarkGfm)
     .use(remarkJapaneseIndent)
