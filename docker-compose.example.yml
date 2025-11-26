@@ -1,10 +1,13 @@
-version: '3'
 services:
   web:
     container_name: md_book_viewer
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_ALGOLIA_APP_ID=${NEXT_PUBLIC_ALGOLIA_APP_ID}
+        - NEXT_PUBLIC_ALGOLIA_SEARCH_KEY=${NEXT_PUBLIC_ALGOLIA_SEARCH_KEY}
+        - NEXT_PUBLIC_ALGOLIA_INDEX_NAME=${NEXT_PUBLIC_ALGOLIA_INDEX_NAME:-md-book-viewer}
     restart: always
     expose:
       - 3000
