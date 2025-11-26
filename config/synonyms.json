@@ -135,6 +135,10 @@
     {
       "type": "synonym",
       "synonyms": ["等価", "equivalent", "equivalence"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["k-means", "k平均法", "k-平均法"]
     }
   ]
 }
