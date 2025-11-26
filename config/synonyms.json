@@ -159,6 +159,10 @@
     {
       "type": "synonym",
       "synonyms": ["ヤコビアン", "Jacobian", "ヤコビ行列"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["FFT", "高速フーリエ変換", "Fast Fourier Transform"]
     }
   ]
 }
