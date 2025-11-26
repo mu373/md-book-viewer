@@ -202,6 +202,24 @@ async function indexBooks() {
     },
   })
 
+  // Load and save synonyms
+  const synonymsPath = path.resolve(process.cwd(), 'config/synonyms.json')
+  if (fs.existsSync(synonymsPath)) {
+    console.log('Loading synonyms...')
+    const synonymsConfig = JSON.parse(fs.readFileSync(synonymsPath, 'utf-8'))
+    if (synonymsConfig.synonyms?.length > 0) {
+      await client.clearSynonyms({ indexName })
+      await client.saveSynonyms({
+        indexName,
+        synonymHit: synonymsConfig.synonyms.map((s: Record<string, unknown>, i: number) => ({
+          ...s,
+          objectID: `synonym-${i}`,
+        })),
+      })
+      console.log(`Saved ${synonymsConfig.synonyms.length} synonyms`)
+    }
+  }
+
   // Clear existing records and save new ones
   console.log('Uploading records to Algolia...')
   await client.clearObjects({ indexName })

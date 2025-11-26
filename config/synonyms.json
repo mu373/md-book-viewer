@@ -1,0 +1,147 @@
+{
+  "synonyms": [
+    {
+      "type": "synonym",
+      "synonyms": ["ベイズ", "Bayes", "bayes"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["グラフ", "graph", "Graph"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["ニューラルネットワーク", "neural network", "NN"]
+    },
+    {
+      "type": "oneWaySynonym",
+      "input": "ML",
+      "synonyms": ["機械学習", "machine learning"]
+    },
+    {
+      "type": "oneWaySynonym",
+      "input": "DL",
+      "synonyms": ["深層学習", "deep learning"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["MCMC", "マルコフ連鎖モンテカルロ法", "Markov chain Monte Carlo"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["GNN", "グラフニューラルネットワーク", "Graph Neural Network"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["GCN", "Graph Convolutional Network", "グラフ畳み込みネットワーク"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["MLP", "多層パーセプトロン", "Multilayer Perceptron"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["VAE", "変分オートエンコーダ", "Variational Autoencoder"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["GAN", "敵対的生成ネットワーク", "Generative Adversarial Network"]
+    },
+    {
+      "type": "oneWaySynonym",
+      "input": "拡散モデル",
+      "synonyms": ["diffusion model", "Diffusion Model"]
+    },
+    {
+      "type": "oneWaySynonym",
+      "input": "事後分布",
+      "synonyms": ["posterior", "posterior distribution"]
+    },
+    {
+      "type": "oneWaySynonym",
+      "input": "事前分布",
+      "synonyms": ["prior", "prior distribution"]
+    },
+    {
+      "type": "oneWaySynonym",
+      "input": "尤度",
+      "synonyms": ["likelihood"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["DDPM", "デノイジング拡散確率モデル", "Denoising Diffusion Probabilistic Model"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["SDE", "確率微分方程式", "Stochastic Differential Equations"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["ODE", "常微分方程式", "Ordinary Differential Equations"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["SBM", "スコアベースモデル", "Score Based Model"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["ELBO", "変分下限", "Evidence Lower Bound"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["HPD", "最高事後密度", "Highest Posterior Density"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["KL", "カルバック・ライブラー", "Kullback-Leibler"]
+    },
+    {
+      "type": "oneWaySynonym",
+      "input": "SNR",
+      "synonyms": ["信号対雑音比", "Signal-to-Noise Ratio"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["embedding", "埋め込み", "エンベディング"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["softmax", "ソフトマックス"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["ER", "Erdős–Rényi", "Erdos-Renyi"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["交差エントロピー損失", "cross-entropy loss", "cross entropy loss"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["DAG", "有向非巡回グラフ", "Directed Acyclic Graph"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["アルゴリズム", "algorithm"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["誤差逆伝播法", "BP", "backpropagation"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["ラベル伝播法", "LP", "Label Propagation"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["メッセージ伝達", "message passing", "MP"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["同型", "isomorphic", "isomorphism"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["等価", "equivalent", "equivalence"]
+    }
+  ]
+}
