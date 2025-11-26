@@ -139,6 +139,10 @@
     {
       "type": "synonym",
       "synonyms": ["k-means", "k平均法", "k-平均法"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["WL", "ワイスファイラー・リーマン検査", "Weisfeiler-Lehman"]
     }
   ]
 }
