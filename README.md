@@ -360,6 +360,27 @@ Run `pnpm index:algolia` whenever you:
 - Results show chapter and section with highlighted matches
 - Keyboard navigation with arrow keys and Enter
 
+### Synonyms
+
+You can define synonyms and abbreviations in `config/synonyms.json` to improve search results. The indexing script automatically uploads these to Algolia.
+
+```json
+{
+  "synonyms": [
+    {
+      "type": "synonym",
+      "synonyms": ["MCMC", "マルコフ連鎖モンテカルロ法", "Markov chain Monte Carlo"]
+    },
+    {
+      "type": "synonym",
+      "synonyms": ["GNN", "グラフニューラルネットワーク", "Graph Neural Network"]
+    }
+  ]
+}
+```
+
+Searching any term in a synonym group will find results containing any of the other terms.
+
 ## Technologies Used
 
 - **Next.js 15** - React framework with App Router and static export
