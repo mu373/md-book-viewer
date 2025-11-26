@@ -12,7 +12,7 @@
     "lint": "eslint",
     "generate-book": "node scripts/generate-book-json.js",
     "copy-images": "node scripts/copy-book-images.js",
-    "index:algolia": "tsx scripts/index-algolia.ts"
+    "index": "tsx scripts/index-algolia.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",

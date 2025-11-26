@@ -12,6 +12,7 @@ A modern Next.js application for reading books in markdown format with full math
 - **Japanese Text Support**: Proper typography and full-width space indentation
 - **Static Generation**: Fast page loads with Next.js SSG
 - **Dark Mode**: Automatic dark mode support
+- **Full-Text Search**: Algolia-powered search with Japanese language support
 
 ## Getting Started
 
@@ -305,6 +306,59 @@ The [Dockerfile](Dockerfile) implements a two-stage build:
    - Uses lightweight Bun runtime
    - Copies only the `out/` directory and server files
    - Runs [server.ts](server.ts) with Bun for optimized static serving
+
+## Search Setup (Algolia)
+
+The application supports full-text search powered by Algolia.
+
+### Setup
+
+1. Create an [Algolia account](https://dashboard.algolia.com/) (free tier: 10k records, 10k searches/month)
+
+2. Create a new application and index
+
+3. Copy `.env.example` to `.env.local` and fill in your credentials:
+```bash
+cp .env.example .env.local
+```
+
+```bash
+# Server-side only (for indexing)
+ALGOLIA_APP_ID=your_app_id
+ALGOLIA_ADMIN_KEY=your_admin_key
+ALGOLIA_INDEX_NAME=md-book-viewer
+
+# Client-side (for search UI)
+NEXT_PUBLIC_ALGOLIA_APP_ID=your_app_id
+NEXT_PUBLIC_ALGOLIA_SEARCH_KEY=your_search_only_key
+NEXT_PUBLIC_ALGOLIA_INDEX_NAME=md-book-viewer
+```
+
+4. Run the indexing script to push content to Algolia:
+```bash
+pnpm index
+```
+
+This will:
+- Read all books from `BOOKS_CONFIG`
+- Extract text content from markdown files
+- Split content into searchable chunks by headings
+- Configure the index for Japanese language (`indexLanguages: ['ja']`)
+- Upload records to Algolia
+
+### Re-indexing
+
+Run `pnpm index:algolia` whenever you:
+- Add new books or chapters
+- Update existing content
+- Change the books configuration
+
+### Search Features
+
+- Press `⌘K` (Mac) or `Ctrl+K` (Windows/Linux) to open search
+- Toggle between searching current book or all books
+- Results show chapter and section with highlighted matches
+- Keyboard navigation with arrow keys and Enter
 
 ## Technologies Used
 
