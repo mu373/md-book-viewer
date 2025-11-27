@@ -71,7 +71,7 @@ export function chunkByHeadings(markdownContent: string, maxChunkSize = 500): Co
   let currentContent: string[] = []
 
   for (const line of lines) {
-    const headingMatch = line.match(/^(#{2,3})\s+(.+)$/)
+    const headingMatch = line.match(/^(#{2,4})\s+(.+)$/)
 
     if (headingMatch) {
       // Save previous chunk if it has content
