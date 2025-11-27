@@ -1,6 +1,9 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { loadDefaultJapaneseParser } from 'budoux'
+
+const parser = loadDefaultJapaneseParser()
 
 interface ChapterContentProps {
   html: string
@@ -32,6 +35,16 @@ export default function ChapterContent({ html, language }: ChapterContentProps) 
       link.setAttribute('target', '_blank')
       link.setAttribute('rel', 'noopener noreferrer nofollow')
     })
+
+    // Apply BudouX to headers for Japanese text
+    if (language === 'ja') {
+      const headers = articleRef.current.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      headers.forEach((header) => {
+        if (header.getAttribute('data-budoux-applied')) return
+        parser.applyToElement(header as HTMLElement)
+        header.setAttribute('data-budoux-applied', 'true')
+      })
+    }
 
     // Render math after hydration
     const renderMath = () => {
@@ -65,7 +78,7 @@ export default function ChapterContent({ html, language }: ChapterContentProps) 
 
     // Small delay to ensure DOM is fully settled after hydration
     setTimeout(renderMath, 0)
-  }, [html])
+  }, [html, language])
 
   return (
     <article

@@ -13,6 +13,7 @@ import { processMarkdownSync } from '@/lib/markdown'
 import ChapterContent from '@/components/ChapterContent'
 import Sidebar from '@/components/Sidebar'
 import SearchHighlighter from '@/components/SearchHighlighter'
+import BudouXText from '@/components/BudouXText'
 
 interface PageProps {
   params: Promise<{
@@ -77,19 +78,19 @@ export default async function ChapterPage({ params }: PageProps) {
 
           {/* Bottom Navigation */}
           <nav className="mt-12 pt-6">
-            <div className="flex justify-between gap-4">
+            <div className="flex justify-between gap-2">
               {previousChapter ? (
                 <Link
                   href={`/${bookId}/${previousChapter.id}`}
                   className="flex-1 flex items-center gap-2 p-3 bg-card rounded-md border border-border hover:bg-accent transition-colors group"
                 >
-                  <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
+                  <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-foreground shrink-0" />
                   <div className="flex-1 min-w-0">
                     <div className="text-[10px] text-muted-foreground mb-0.5">
                       Previous
                     </div>
-                    <div className="text-xs font-medium text-foreground truncate">
-                      {previousChapter.title}
+                    <div className="text-xs font-medium text-foreground">
+                      <BudouXText language={book.language}>{previousChapter.title}</BudouXText>
                     </div>
                   </div>
                 </Link>
@@ -106,11 +107,11 @@ export default async function ChapterPage({ params }: PageProps) {
                     <div className="text-[10px] text-muted-foreground mb-0.5">
                       Next
                     </div>
-                    <div className="text-xs font-medium text-foreground truncate">
-                      {nextChapter.title}
+                    <div className="text-xs font-medium text-foreground">
+                      <BudouXText language={book.language}>{nextChapter.title}</BudouXText>
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
+                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground shrink-0" />
                 </Link>
               ) : (
                 <div className="flex-1" />
