@@ -348,7 +348,7 @@ This will:
 
 ### Re-indexing
 
-Run `pnpm index:algolia` whenever you:
+Run `pnpm index` whenever you:
 - Add new books or chapters
 - Update existing content
 - Change the books configuration
