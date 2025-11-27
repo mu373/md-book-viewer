@@ -80,6 +80,13 @@ pre:has(code.language-math) {
   overflow: visible !important;
 }
 
+/* Horizontal scroll for long equations */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5em 0;
+}
+
 /* Improve math rendering in dark mode */
 @media (prefers-color-scheme: dark) {
   .katex {
