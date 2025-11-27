@@ -11,6 +11,29 @@ interface SearchModalProps {
   currentBookId?: string
 }
 
+interface Hit {
+  url: string
+  _snippetResult?: { content?: { value?: string } }
+  _highlightResult?: { content?: { value?: string } }
+}
+
+const HIGHLIGHT_STORAGE_KEY = 'search-highlight-terms'
+
+function extractHighlightTerms(hit: Hit): string[] {
+  const highlightedContent = hit._snippetResult?.content?.value || hit._highlightResult?.content?.value || ''
+  const matches = highlightedContent.matchAll(/<mark>([^<]+)<\/mark>/g)
+  const terms = [...matches].map(m => m[1])
+  return [...new Set(terms)] // deduplicate
+}
+
+function navigateWithHighlight(hit: Hit, router: ReturnType<typeof useRouter>) {
+  const terms = extractHighlightTerms(hit)
+  if (terms.length > 0) {
+    sessionStorage.setItem(HIGHLIGHT_STORAGE_KEY, JSON.stringify(terms))
+  }
+  router.push(hit.url)
+}
+
 export default function SearchModal({ isOpen, onClose, currentBookId }: SearchModalProps) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult | null>(null)
@@ -85,7 +108,7 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
         e.preventDefault()
         const hit = results.hits[selectedIndex]
         if (hit) {
-          router.push(hit.url)
+          navigateWithHighlight(hit, router)
           onClose()
         }
         break
@@ -165,7 +188,7 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
                 <li key={hit.objectID}>
                   <button
                     onClick={() => {
-                      router.push(hit.url)
+                      navigateWithHighlight(hit, router)
                       onClose()
                     }}
                     className={`w-full px-4 py-3 text-left hover:bg-muted transition-colors ${
@@ -196,7 +219,7 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
                     </div>
                     {hit._snippetResult?.content?.value?.includes('<mark>') && (
                       <p
-                        className="text-sm text-foreground line-clamp-2 [&_mark]:bg-yellow-200 [&_mark]:text-yellow-900 dark:[&_mark]:bg-yellow-800 dark:[&_mark]:text-yellow-100"
+                        className="text-sm text-foreground line-clamp-2 [&_mark]:bg-yellow-200 dark:[&_mark]:bg-yellow-800"
                         dangerouslySetInnerHTML={{
                           __html: hit._snippetResult.content.value,
                         }}

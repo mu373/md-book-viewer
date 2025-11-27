@@ -411,3 +411,32 @@ pre:has(code.language-math) {
 .dark .markdown-content hr {
   background-color: #21262d;
 }
+
+/* Search result highlight animation */
+.search-highlight {
+  background-color: #fef08a;
+  animation: highlight-fade 30s ease-out forwards;
+}
+
+.dark .search-highlight {
+  background-color: #854d0e;
+  animation: highlight-fade-dark 30s ease-out forwards;
+}
+
+@keyframes highlight-fade {
+  0%, 95% {
+    background-color: #fef08a;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes highlight-fade-dark {
+  0%, 95% {
+    background-color: #854d0e;
+  }
+  100% {
+    background-color: transparent;
+  }
+}

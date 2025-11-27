@@ -12,6 +12,7 @@ import {
 import { processMarkdownSync } from '@/lib/markdown'
 import ChapterContent from '@/components/ChapterContent'
 import Sidebar from '@/components/Sidebar'
+import SearchHighlighter from '@/components/SearchHighlighter'
 
 interface PageProps {
   params: Promise<{
@@ -72,6 +73,7 @@ export default async function ChapterPage({ params }: PageProps) {
         <div className="max-w-3xl mx-auto px-6 py-16 lg:py-8 lg:px-12 overflow-x-hidden">
           {/* Chapter Content */}
           <ChapterContent html={html} language={book.language} />
+          <SearchHighlighter />
 
           {/* Bottom Navigation */}
           <nav className="mt-12 pt-6">
