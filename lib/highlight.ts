@@ -41,6 +41,20 @@ export interface HighlightResult {
 }
 
 /**
+ * Remove all existing search highlights from the container
+ */
+export function clearHighlights(container: HTMLElement): void {
+  const marks = container.querySelectorAll(`mark.${HIGHLIGHT_CLASS}`)
+  marks.forEach(mark => {
+    const parent = mark.parentNode
+    if (parent) {
+      parent.replaceChild(document.createTextNode(mark.textContent || ''), mark)
+      parent.normalize() // Merge adjacent text nodes
+    }
+  })
+}
+
+/**
  * Find and highlight matching text in the DOM
  * Returns the first matched element for scrolling
  */
