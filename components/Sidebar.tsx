@@ -29,10 +29,11 @@ export default function Sidebar({
 
   return (
     <>
-      {/* Mobile Search Button */}
+      {/* Mobile Search Button (buttonOnly - uses desktop instance's modal) */}
       <SearchButton
         bookId={book.id}
         className="fixed top-4 right-16 z-50 lg:hidden size-9"
+        buttonOnly
       />
 
       {/* Mobile Menu Button */}
