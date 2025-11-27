@@ -68,7 +68,7 @@ export default function Sidebar({
           overflow-hidden z-40 flex flex-col
           w-full lg:w-80
           lg:bg-transparent lg:border-none
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${isOpen ? 'translate-x-0' : '-translate-x-full invisible lg:visible'}
           ${isCollapsed ? 'lg:-translate-x-full' : 'lg:translate-x-0'}
         `}
       >

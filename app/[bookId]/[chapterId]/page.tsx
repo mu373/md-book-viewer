@@ -69,7 +69,7 @@ export default async function ChapterPage({ params }: PageProps) {
 
       {/* Main Content */}
       <main className="lg:pl-72 xl:pr-60">
-        <div className="max-w-3xl mx-auto px-6 py-16 lg:py-8 lg:px-12">
+        <div className="max-w-3xl mx-auto px-6 py-16 lg:py-8 lg:px-12 overflow-x-hidden">
           {/* Chapter Content */}
           <ChapterContent html={html} language={book.language} />
 
