@@ -383,7 +383,7 @@ Searching any term in a synonym group will find results containing any of the ot
 
 ## Technologies Used
 
-- **Next.js 15** - React framework with App Router and static export
+- **Next.js 16** - React framework with App Router and static export
 - **TypeScript** - Type safety
 - **Tailwind CSS 4** - Styling
 - **KaTeX** - Math rendering
