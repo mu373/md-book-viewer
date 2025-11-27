@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import SearchModal from './SearchModal'
+import { isSearchEnabled } from '@/lib/algolia'
 
 interface SearchButtonProps {
   bookId?: string
@@ -12,9 +13,12 @@ interface SearchButtonProps {
 
 export default function SearchButton({ bookId, className }: SearchButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const searchEnabled = isSearchEnabled()
 
   // Global keyboard shortcut (Cmd/Ctrl + K)
   useEffect(() => {
+    if (!searchEnabled) return
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault()
@@ -24,7 +28,9 @@ export default function SearchButton({ bookId, className }: SearchButtonProps) {
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [searchEnabled])
+
+  if (!searchEnabled) return null
 
   return (
     <>
