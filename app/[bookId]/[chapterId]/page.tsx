@@ -78,14 +78,14 @@ export default async function ChapterPage({ params }: PageProps) {
 
           {/* Bottom Navigation */}
           <nav className="mt-12 pt-6">
-            <div className="flex justify-between gap-2">
-              {previousChapter ? (
+            <div className="flex gap-2">
+              {previousChapter && (
                 <Link
                   href={`/${bookId}/${previousChapter.id}`}
                   className="flex-1 flex items-center gap-2 p-3 bg-card rounded-md border border-border hover:bg-accent transition-colors group"
                 >
                   <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-foreground shrink-0" />
-                  <div className="flex-1 min-w-0">
+                  <div className="min-w-0">
                     <div className="text-[10px] text-muted-foreground mb-0.5">
                       Previous
                     </div>
@@ -94,29 +94,62 @@ export default async function ChapterPage({ params }: PageProps) {
                     </div>
                   </div>
                 </Link>
-              ) : (
-                <div className="flex-1" />
               )}
 
-              {nextChapter ? (
+              {nextChapter && (
                 <Link
                   href={`/${bookId}/${nextChapter.id}`}
-                  className="flex-1 flex items-center gap-2 p-3 bg-card rounded-md border border-border hover:bg-accent transition-colors text-right group"
+                  className={`flex-1 flex items-center gap-2 p-3 bg-card rounded-md border border-border hover:bg-accent transition-colors group ${previousChapter ? 'text-right justify-end' : ''}`}
                 >
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[10px] text-muted-foreground mb-0.5">
-                      Next
+                  {previousChapter && (
+                    <div className="min-w-0">
+                      <div className="text-[10px] text-muted-foreground mb-0.5">
+                        Next
+                      </div>
+                      <div className="text-xs font-medium text-foreground">
+                        <BudouXText language={book.language}>{nextChapter.title}</BudouXText>
+                      </div>
                     </div>
-                    <div className="text-xs font-medium text-foreground">
-                      <BudouXText language={book.language}>{nextChapter.title}</BudouXText>
+                  )}
+                  {!previousChapter && (
+                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground shrink-0" />
+                  )}
+                  {!previousChapter && (
+                    <div className="min-w-0">
+                      <div className="text-[10px] text-muted-foreground mb-0.5">
+                        Next
+                      </div>
+                      <div className="text-xs font-medium text-foreground">
+                        <BudouXText language={book.language}>{nextChapter.title}</BudouXText>
+                      </div>
                     </div>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground shrink-0" />
+                  )}
+                  {previousChapter && (
+                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground shrink-0" />
+                  )}
                 </Link>
-              ) : (
-                <div className="flex-1" />
               )}
             </div>
+
+            {/* Breadcrumb */}
+            <nav aria-label="Breadcrumb" className="mt-4 pb-8">
+              <ol className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap">
+                <li className="flex items-center">
+                  <Link
+                    href={`/${bookId}/${book.chapters[0]?.id || chapterId}`}
+                    className="hover:text-foreground transition-colors"
+                  >
+                    <BudouXText language={book.language}>{book.title}</BudouXText>
+                  </Link>
+                </li>
+                <li className="flex items-center">
+                  <ChevronRight className="w-3 h-3 mx-1" />
+                  <span className="text-foreground">
+                    <BudouXText language={book.language}>{chapter.title}</BudouXText>
+                  </span>
+                </li>
+              </ol>
+            </nav>
           </nav>
         </div>
       </main>
