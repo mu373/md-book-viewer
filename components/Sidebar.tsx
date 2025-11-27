@@ -29,12 +29,15 @@ export default function Sidebar({
 
   return (
     <>
-      {/* Mobile Search Button (buttonOnly - uses desktop instance's modal) */}
+      {/* Mobile Search Button (buttonOnly - uses primary instance's modal) */}
       <SearchButton
         bookId={book.id}
         className="fixed top-4 right-16 z-50 lg:hidden size-9"
         buttonOnly
       />
+
+      {/* Primary SearchButton - always mounted for modal and keyboard handler, hidden on mobile */}
+      <SearchButton bookId={book.id} className="hidden" />
 
       {/* Mobile Menu Button */}
       <Button
@@ -49,7 +52,7 @@ export default function Sidebar({
 
       {/* Desktop Toggle Buttons - floats and changes icon based on state */}
       <div className="hidden lg:flex fixed bottom-4 left-4 z-50 gap-2">
-<SearchButton bookId={book.id} />
+        <SearchButton bookId={book.id} buttonOnly />
         <Button
           onClick={() => setIsCollapsed(!isCollapsed)}
           variant="outline"
