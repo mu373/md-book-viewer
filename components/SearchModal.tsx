@@ -18,6 +18,7 @@ interface Hit {
 }
 
 const HIGHLIGHT_STORAGE_KEY = 'search-highlight-terms'
+const SEARCH_QUERY_KEY = 'search-query'
 
 function extractHighlightTerms(hit: Hit): string[] {
   const highlightedContent = hit._snippetResult?.content?.value || hit._highlightResult?.content?.value || ''
@@ -35,7 +36,12 @@ function navigateWithHighlight(hit: Hit, router: ReturnType<typeof useRouter>) {
 }
 
 export default function SearchModal({ isOpen, onClose, currentBookId }: SearchModalProps) {
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem(SEARCH_QUERY_KEY) || ''
+    }
+    return ''
+  })
   const [results, setResults] = useState<SearchResult | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -45,6 +51,11 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
   const [isComposing, setIsComposing] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
+
+  // Persist query to sessionStorage
+  useEffect(() => {
+    sessionStorage.setItem(SEARCH_QUERY_KEY, query)
+  }, [query])
 
   // Debounced search
   useEffect(() => {
