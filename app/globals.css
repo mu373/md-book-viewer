@@ -80,13 +80,30 @@ pre:has(code.language-math) {
   overflow: visible !important;
 }
 
-/* Horizontal scroll for long equations */
+/* Long equations can scroll horizontally (scrollbar hidden) */
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.5em 0;
   max-width: 100%;
+  scrollbar-width: none; /* Firefox */
+  overscroll-behavior-x: none;
 }
+
+.katex-display::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* Remove KaTeX internal margins */
+.katex-display > .katex {
+  margin: 0;
+  padding: 0;
+}
+
+.katex-display > .katex > .katex-html {
+  max-width: calc(100% - 5px);
+}
+
 
 /* Improve math rendering in dark mode */
 @media (prefers-color-scheme: dark) {
