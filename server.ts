@@ -34,7 +34,7 @@ app.get('*', async (c) => {
     c.header('Cache-Control', 'no-cache, no-store, must-revalidate')
     c.header('Content-Type', 'text/html; charset=utf-8')
     return c.html(html)
-  } catch (error) {
+  } catch {
     return c.text('Not Found', 404)
   }
 })
@@ -42,7 +42,9 @@ app.get('*', async (c) => {
 const port = parseInt(process.env.PORT || '3000')
 console.log(`Server running at http://localhost:${port}`)
 
-export default {
+const server = {
   port,
   fetch: app.fetch,
 }
+
+export default server
