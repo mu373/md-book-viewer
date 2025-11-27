@@ -32,26 +32,32 @@ export default function SearchHighlighter() {
       clearHighlights(article)
 
       const applyHighlight = (attempts = 0) => {
-        // Wait for KaTeX to finish rendering
         const allMath = article.querySelectorAll('code.language-math')
-        const renderedMath = article.querySelectorAll('code.language-math.katex-rendered')
-        const katexElements = article.querySelectorAll('.katex')
 
-        const katexNotReady = allMath.length > 0 && (
-          renderedMath.length < allMath.length ||
-          katexElements.length < renderedMath.length ||
-          attempts < 15
-        )
-
-        if (katexNotReady && attempts < 100) {
-          setTimeout(() => applyHighlight(attempts + 1), 100)
+        // If no math, highlight immediately
+        if (allMath.length === 0) {
+          highlightTextInDOM(article, terms)
           return
         }
 
-        highlightTextInDOM(article, terms)
+        // Wait for KaTeX to finish rendering
+        const renderedMath = article.querySelectorAll('code.language-math.katex-rendered')
+        const katexElements = article.querySelectorAll('.katex')
+
+        const katexReady = renderedMath.length >= allMath.length &&
+                          katexElements.length >= renderedMath.length
+
+        if (!katexReady && attempts < 50) {
+          setTimeout(() => applyHighlight(attempts + 1), 50)
+          return
+        }
+
+        // Small buffer after KaTeX renders for DOM stability
+        setTimeout(() => highlightTextInDOM(article, terms), 100)
       }
 
-      setTimeout(() => applyHighlight(0), 800)
+      // Start after a short delay for initial render
+      setTimeout(() => applyHighlight(0), 100)
     }
 
     // Check on mount
