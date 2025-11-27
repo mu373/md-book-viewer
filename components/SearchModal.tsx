@@ -70,12 +70,11 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
     return () => clearTimeout(timer)
   }, [query, searchScope, currentBookId])
 
-  // Focus input when modal opens
+  // Focus input and select text when modal opens
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus()
-      setQuery('')
-      setResults(null)
+      inputRef.current?.select()
       setSelectedIndex(0)
       setSearchScope(currentBookId ? 'book' : 'all')
     }
