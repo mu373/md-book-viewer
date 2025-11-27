@@ -7,9 +7,10 @@ import SearchModal from './SearchModal'
 
 interface SearchButtonProps {
   bookId?: string
+  className?: string
 }
 
-export default function SearchButton({ bookId }: SearchButtonProps) {
+export default function SearchButton({ bookId, className }: SearchButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   // Global keyboard shortcut (Cmd/Ctrl + K)
@@ -31,6 +32,7 @@ export default function SearchButton({ bookId }: SearchButtonProps) {
         onClick={() => setIsOpen(true)}
         variant="outline"
         size="icon-sm"
+        className={className}
         aria-label="Search (⌘K)"
         title="Search (⌘K)"
       >

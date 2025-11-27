@@ -29,6 +29,12 @@ export default function Sidebar({
 
   return (
     <>
+      {/* Mobile Search Button */}
+      <SearchButton
+        bookId={book.id}
+        className="fixed top-4 right-16 z-50 lg:hidden size-9"
+      />
+
       {/* Mobile Menu Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}

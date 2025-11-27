@@ -103,10 +103,10 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
 
   return (
     <div
-      className="fixed inset-0 z-[100] bg-black/50 flex items-start justify-center pt-[15vh]"
+      className="fixed inset-0 z-[100] bg-black/50 flex items-start justify-center lg:pt-[15vh]"
       onClick={handleBackdropClick}
     >
-      <div className="bg-background border border-border rounded-lg shadow-2xl w-full max-w-2xl mx-4 overflow-hidden">
+      <div className="bg-background shadow-2xl w-full h-full flex flex-col lg:border lg:border-border lg:rounded-lg lg:max-w-2xl lg:mx-4 lg:h-auto lg:max-h-[80vh]">
         {/* Search input */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
           <Search className="w-5 h-5 text-muted-foreground flex-shrink-0" />
@@ -119,7 +119,7 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
             onKeyDown={handleKeyDown}
             onCompositionStart={() => setIsComposing(true)}
             onCompositionEnd={() => setIsComposing(false)}
-            className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
+            className="flex-1 bg-transparent outline-none text-foreground placeholder:text-muted-foreground text-base"
           />
           {isLoading && <Loader2 className="w-5 h-5 text-muted-foreground animate-spin" />}
           <button
@@ -158,7 +158,7 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
         )}
 
         {/* Results */}
-        <div className="max-h-[60vh] overflow-y-auto">
+        <div className="flex-1 overflow-y-auto lg:flex-none lg:max-h-[60vh]">
           {results && results.hits.length > 0 ? (
             <ul className="py-2">
               {results.hits.map((hit, index) => (
@@ -217,8 +217,8 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
           )}
         </div>
 
-        {/* Footer with keyboard hints */}
-        <div className="flex items-center gap-4 px-4 py-2 border-t border-border text-xs text-muted-foreground">
+        {/* Footer with keyboard hints - hidden on mobile */}
+        <div className="hidden lg:flex items-center gap-4 px-4 py-2 border-t border-border text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
             <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px]">↑</kbd>
             <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px]">↓</kbd>
