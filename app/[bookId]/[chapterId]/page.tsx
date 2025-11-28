@@ -9,6 +9,7 @@ import {
   getPreviousChapter,
   getAllBookChapterPairs,
 } from '@/lib/books'
+import { SETTINGS_CONFIG } from '@/config/settings.config'
 import { processMarkdownSync } from '@/lib/markdown'
 import ChapterContent from '@/components/ChapterContent'
 import Sidebar from '@/components/Sidebar'
@@ -74,7 +75,7 @@ export default async function ChapterPage({ params }: PageProps) {
         <div className="max-w-3xl mx-auto px-6 py-16 lg:py-8 lg:px-12 overflow-x-hidden">
           {/* Chapter Content */}
           <ChapterContent html={html} language={book.language} />
-          <SearchHighlighter />
+          {SETTINGS_CONFIG.searchHighlight.enabled && <SearchHighlighter />}
 
           {/* Bottom Navigation */}
           <nav className="mt-12 pt-6">
@@ -132,24 +133,26 @@ export default async function ChapterPage({ params }: PageProps) {
             </div>
 
             {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="mt-4 pb-8">
-              <ol className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap">
-                <li className="flex items-center">
-                  <Link
-                    href={`/${bookId}/${book.chapters[0]?.id || chapterId}`}
-                    className="hover:text-foreground transition-colors"
-                  >
-                    <BudouXText language={book.language}>{book.title}</BudouXText>
-                  </Link>
-                </li>
-                <li className="flex items-center">
-                  <ChevronRight className="w-3 h-3 mx-1" />
-                  <span className="text-foreground">
-                    <BudouXText language={book.language}>{chapter.title}</BudouXText>
-                  </span>
-                </li>
-              </ol>
-            </nav>
+            {SETTINGS_CONFIG.breadcrumb.enabled && (
+              <nav aria-label="Breadcrumb" className="mt-4 pb-8">
+                <ol className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap">
+                  <li className="flex items-center">
+                    <Link
+                      href={`/${bookId}/${book.chapters[0]?.id || chapterId}`}
+                      className="hover:text-foreground transition-colors"
+                    >
+                      <BudouXText language={book.language}>{book.title}</BudouXText>
+                    </Link>
+                  </li>
+                  <li className="flex items-center">
+                    <ChevronRight className="w-3 h-3 mx-1" />
+                    <span className="text-foreground">
+                      <BudouXText language={book.language}>{chapter.title}</BudouXText>
+                    </span>
+                  </li>
+                </ol>
+              </nav>
+            )}
           </nav>
         </div>
       </main>

@@ -431,18 +431,18 @@ pre:has(code.language-math) {
 
 /* Search result highlight animation */
 .search-highlight {
-  background-color: #fef08a;
-  animation: highlight-fade 30s ease-out forwards;
+  background-color: var(--highlight-color-light, #fef08a);
+  animation: highlight-fade var(--highlight-fade-duration, 30s) ease-out forwards;
 }
 
 .dark .search-highlight {
-  background-color: #854d0e;
-  animation: highlight-fade-dark 30s ease-out forwards;
+  background-color: var(--highlight-color-dark, #854d0e);
+  animation: highlight-fade-dark var(--highlight-fade-duration, 30s) ease-out forwards;
 }
 
 @keyframes highlight-fade {
   0%, 95% {
-    background-color: #fef08a;
+    background-color: var(--highlight-color-light, #fef08a);
   }
   100% {
     background-color: transparent;
@@ -451,7 +451,7 @@ pre:has(code.language-math) {
 
 @keyframes highlight-fade-dark {
   0%, 95% {
-    background-color: #854d0e;
+    background-color: var(--highlight-color-dark, #854d0e);
   }
   100% {
     background-color: transparent;

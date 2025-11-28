@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SETTINGS_CONFIG } from "@/config/settings.config";
 
 export const metadata: Metadata = {
   title: "Book Viewer",
@@ -11,8 +12,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cssVariables = {
+    '--highlight-color-light': SETTINGS_CONFIG.searchHighlight.color.light,
+    '--highlight-color-dark': SETTINGS_CONFIG.searchHighlight.color.dark,
+    '--highlight-fade-duration': `${SETTINGS_CONFIG.searchHighlight.fadeDuration}s`,
+  } as React.CSSProperties;
+
   return (
-    <html lang="en" className="overflow-x-hidden">
+    <html lang="en" className="overflow-x-hidden" style={cssVariables}>
       <head>
         {/* Load KaTeX CSS and JS from CDN for math rendering */}
         <link
