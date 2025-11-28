@@ -1,10 +1,24 @@
 import matter from 'gray-matter'
 
 /**
+ * Removes all HTML tags, repeating until none remain
+ * (handles nested/partial tags like "<<script>script>")
+ */
+function removeHtmlTags(str: string): string {
+  let result = str
+  let prev = ''
+  while (prev !== result) {
+    prev = result
+    result = result.replace(/<[^>]+>/g, '')
+  }
+  return result
+}
+
+/**
  * Strips markdown syntax and returns plain text
  */
 export function stripMarkdown(content: string): string {
-  return content
+  let result = content
     // Remove frontmatter
     .replace(/^---[\s\S]*?---\n?/m, '')
     // Remove code blocks
@@ -14,8 +28,11 @@ export function stripMarkdown(content: string): string {
     .replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1')
     // Remove links but keep text
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    // Remove HTML tags
-    .replace(/<[^>]+>/g, '')
+
+  // Remove HTML tags (loop to handle nested/partial tags)
+  result = removeHtmlTags(result)
+
+  return result
     // Remove emphasis markers
     .replace(/(\*\*|__)(.*?)\1/g, '$2')
     .replace(/(\*|_)(.*?)\1/g, '$2')
