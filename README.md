@@ -307,6 +307,24 @@ The [Dockerfile](Dockerfile) implements a two-stage build:
    - Copies only the `out/` directory and server files
    - Runs [server.ts](server.ts) with Bun for optimized static serving
 
+### Traefik Reverse Proxy
+
+The `docker-compose.example.yml` includes Traefik labels for reverse proxy with HTTPS. See [mu373/traefik](https://github.com/mu373/traefik) for a basic Traefik setup with Let's Encrypt and Cloudflare DNS. To use:
+
+1. Copy and customize the Host rule in your `docker-compose.yml`:
+   ```yaml
+   traefik.http.routers.book.rule: Host(`book.example.com`)
+   ```
+
+2. Ensure the external `traefik-nw` network exists and Traefik is configured
+
+3. **DNS setup**: Add a CNAME record pointing to your server. For example, if your Tailscale server is at `myserver.example.com`, add:
+   ```
+   book.example.com  CNAME  myserver.example.com
+   ```
+
+After setup, the service will be available at `https://book.example.com`.
+
 ## Search Setup (Algolia)
 
 The application supports full-text search powered by Algolia.
