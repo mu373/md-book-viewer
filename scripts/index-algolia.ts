@@ -18,6 +18,7 @@ import { algoliasearch } from 'algoliasearch'
 import fs from 'fs'
 import path from 'path'
 import { chunkByHeadings } from '../lib/search-utils'
+import { BOOKS_CONFIG } from '../config/books.config'
 
 // Load .env if it exists
 const envPath = path.resolve(process.cwd(), '.env')
@@ -61,6 +62,7 @@ interface Chapter {
 interface BookMetadata {
   id: string
   title: string
+  language?: string
   chapters: Chapter[]
 }
 
@@ -75,14 +77,10 @@ interface SearchRecord {
   headingId?: string
   content: string
   url: string
+  language: string
 }
 
-// Import books config
-const BOOKS_CONFIG: string[] = [
-  './books/book-hara-bayesian',
-  './books/book-mlp-graph-neural-network',
-  './books/book-diffusion',
-]
+// Books config imported from config/books.config.ts
 
 function expandPath(filepath: string): string {
   if (filepath.startsWith('~/')) {
@@ -160,6 +158,7 @@ async function indexBooks() {
           headingId: chunk.headingId,
           content: chunk.content,
           url,
+          language: metadata.language || 'ja',
         })
       }
     }
@@ -173,13 +172,13 @@ async function indexBooks() {
     return
   }
 
-  // Configure index settings for Japanese
-  console.log('Configuring index settings for Japanese...')
+  // Configure index settings
+  console.log('Configuring index settings...')
   await client.setSettings({
     indexName,
     indexSettings: {
-      indexLanguages: ['ja'],
-      queryLanguages: ['ja'],
+      indexLanguages: ['ja', 'en'],
+      queryLanguages: ['ja', 'en'],
       searchableAttributes: [
         'heading',
         'content',
@@ -188,7 +187,7 @@ async function indexBooks() {
       ],
       attributesToHighlight: ['content', 'heading', 'chapterTitle'],
       attributesToSnippet: ['content:60'],
-      attributesForFaceting: ['bookId', 'chapterId'],
+      attributesForFaceting: ['bookId', 'chapterId', 'language'],
       ranking: [
         'typo',
         'geo',
