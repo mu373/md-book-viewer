@@ -29,6 +29,7 @@ export interface SearchRecord {
   headingId?: string
   content: string
   url: string
+  language: string
 }
 
 export interface SearchResult {
@@ -63,8 +64,7 @@ export async function search(query: string, bookId?: string): Promise<SearchResu
       query,
       filters: bookId ? `bookId:${bookId}` : undefined,
       hitsPerPage: 20,
-      restrictSearchableAttributes: ['content'],
-      attributesToHighlight: ['content'],
+      attributesToHighlight: ['content', 'heading', 'chapterTitle'],
       attributesToSnippet: ['content:60'],
       highlightPreTag: '<mark>',
       highlightPostTag: '</mark>',

@@ -14,16 +14,29 @@ interface SearchModalProps {
 interface Hit {
   url: string
   _snippetResult?: { content?: { value?: string } }
-  _highlightResult?: { content?: { value?: string } }
+  _highlightResult?: {
+    content?: { value?: string }
+    heading?: { value?: string }
+    chapterTitle?: { value?: string }
+  }
 }
 
 const HIGHLIGHT_STORAGE_KEY = 'search-highlight-terms'
 const SEARCH_QUERY_KEY = 'search-query'
 
 function extractHighlightTerms(hit: Hit): string[] {
-  const highlightedContent = hit._snippetResult?.content?.value || hit._highlightResult?.content?.value || ''
-  const matches = highlightedContent.matchAll(/<mark>([^<]+)<\/mark>/g)
-  const terms = [...matches].map(m => m[1])
+  const highlightedFields = [
+    hit._snippetResult?.content?.value,
+    hit._highlightResult?.content?.value,
+    hit._highlightResult?.heading?.value,
+    hit._highlightResult?.chapterTitle?.value,
+  ].filter((value): value is string => Boolean(value))
+
+  const terms = highlightedFields.flatMap(field => {
+    const matches = field.matchAll(/<mark>([^<]+)<\/mark>/g)
+    return [...matches].map(m => m[1])
+  })
+
   return [...new Set(terms)] // deduplicate
 }
 
