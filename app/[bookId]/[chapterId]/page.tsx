@@ -10,7 +10,7 @@ import {
   getAllBookChapterPairs,
 } from '@/lib/books'
 import { SETTINGS_CONFIG } from '@/config/settings.config'
-import { processMarkdownSync } from '@/lib/markdown'
+import { processMarkdown } from '@/lib/markdown'
 import ChapterContent from '@/components/ChapterContent'
 import Sidebar from '@/components/Sidebar'
 import SearchHighlighter from '@/components/SearchHighlighter'
@@ -53,7 +53,7 @@ export default async function ChapterPage({ params }: PageProps) {
 
   // Get chapter content and process markdown
   const content = getChapterContent(book, chapter)
-  const { html, toc } = processMarkdownSync(content)
+  const { html, toc } = await processMarkdown(content)
 
   // Get navigation chapters
   const previousChapter = getPreviousChapter(bookId, chapterId)

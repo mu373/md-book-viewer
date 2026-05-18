@@ -4,6 +4,7 @@ import remarkMath from 'remark-math'
 import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypeRaw from 'rehype-raw'
+import rehypeShiki from '@shikijs/rehype'
 import rehypeStringify from 'rehype-stringify'
 import matter from 'gray-matter'
 import { remarkJapaneseIndent } from './remark-japanese-indent'
@@ -32,6 +33,12 @@ export async function processMarkdown(content: string): Promise<ProcessedMarkdow
     .use(remarkRehype, { allowDangerousHtml: true }) // Convert to HTML AST
     .use(rehypeRaw) // Support raw HTML in markdown
     // Note: Math will be rendered client-side by KaTeX
+    .use(rehypeShiki, {
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    })
     .use(rehypeStringify) // Convert to HTML string
     .process(markdownContent)
 
@@ -42,33 +49,3 @@ export async function processMarkdown(content: string): Promise<ProcessedMarkdow
   }
 }
 
-/**
- * Synchronous version for simpler use cases
- */
-export function processMarkdownSync(content: string): ProcessedMarkdown {
-  // Extract frontmatter
-  const { content: markdownContent, data: frontmatter } = matter(content)
-
-  // Array to collect TOC headings
-  const toc: TOCHeading[] = []
-
-  // Process markdown through the unified pipeline (sync)
-  const result = unified()
-    .use(remarkParse)
-    .use(remarkSingleLineBreaks)
-    .use(remarkMath)
-    .use(remarkGfm)
-    .use(remarkJapaneseIndent)
-    .use(remarkExtractTOC, { toc })
-    .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeRaw)
-    // Note: Math will be rendered client-side by KaTeX
-    .use(rehypeStringify)
-    .processSync(markdownContent)
-
-  return {
-    html: String(result),
-    toc,
-    frontmatter: Object.keys(frontmatter).length > 0 ? frontmatter : undefined,
-  }
-}

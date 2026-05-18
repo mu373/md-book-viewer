@@ -402,6 +402,22 @@ pre:has(code.language-math) {
   background-color: #161b22;
 }
 
+/* Shiki dual theme: switch color variables in dark mode */
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+/* Let pre background handle the container background */
+.markdown-content pre.shiki {
+  background-color: #f6f8fa;
+}
+
+.dark .markdown-content pre.shiki {
+  background-color: #161b22;
+}
+
 .dark .markdown-content blockquote {
   color: #8b949e;
   border-left-color: #3b434b;

@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
+    "@shikijs/rehype": "^3.22.0",
     "@tailwindcss/typography": "^0.5.19",
     "algoliasearch": "^5.45.0",
     "budoux": "^0.7.0",
@@ -35,6 +36,7 @@
     "remark-math": "^6.0.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
+    "shiki": "^3.22.0",
     "tailwind-merge": "^3.5.0",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0"
