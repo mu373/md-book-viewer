@@ -11,6 +11,7 @@ import { remarkJapaneseIndent } from './remark-japanese-indent'
 import { remarkSingleLineBreaks } from './remark-single-line-breaks'
 import { rehypeWrapTables } from './rehype-wrap-tables'
 import { remarkExtractTOC } from './toc'
+import { extractMathMacros } from './math-macros'
 import type { ProcessedMarkdown, TOCHeading } from '@/types'
 
 /**
@@ -19,6 +20,8 @@ import type { ProcessedMarkdown, TOCHeading } from '@/types'
 export async function processMarkdown(content: string): Promise<ProcessedMarkdown> {
   // Extract frontmatter
   const { content: markdownContent, data: frontmatter } = matter(content)
+  const { content: markdownWithoutMacroDefinitions, macros: mathMacros } =
+    extractMathMacros(markdownContent)
 
   // Array to collect TOC headings
   const toc: TOCHeading[] = []
@@ -42,11 +45,12 @@ export async function processMarkdown(content: string): Promise<ProcessedMarkdow
       },
     })
     .use(rehypeStringify) // Convert to HTML string
-    .process(markdownContent)
+    .process(markdownWithoutMacroDefinitions)
 
   return {
     html: String(result),
     toc,
+    mathMacros: Object.keys(mathMacros).length > 0 ? mathMacros : undefined,
     frontmatter: Object.keys(frontmatter).length > 0 ? frontmatter : undefined,
   }
 }

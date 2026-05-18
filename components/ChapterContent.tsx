@@ -8,6 +8,7 @@ const parser = loadDefaultJapaneseParser()
 interface ChapterContentProps {
   html: string
   language?: string
+  mathMacros?: Record<string, string>
 }
 
 // Type declaration for KaTeX global
@@ -17,13 +18,17 @@ declare global {
       render: (
         tex: string,
         element: Element,
-        options?: { displayMode?: boolean; throwOnError?: boolean }
+        options?: {
+          displayMode?: boolean
+          throwOnError?: boolean
+          macros?: Record<string, string>
+        }
       ) => void
     }
   }
 }
 
-export default function ChapterContent({ html, language }: ChapterContentProps) {
+export default function ChapterContent({ html, language, mathMacros }: ChapterContentProps) {
   const articleRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -57,6 +62,8 @@ export default function ChapterContent({ html, language }: ChapterContentProps) 
       const mathElements = articleRef.current?.querySelectorAll('code.language-math')
       if (!mathElements) return
 
+      const macros = { ...mathMacros }
+
       mathElements.forEach((el) => {
         // Skip if already rendered
         if (el.classList.contains('katex-rendered')) return
@@ -68,6 +75,7 @@ export default function ChapterContent({ html, language }: ChapterContentProps) 
           window.katex?.render(text, el, {
             displayMode: isDisplay,
             throwOnError: false,
+            macros,
           })
           el.classList.add('katex-rendered')
         } catch (e) {
@@ -78,7 +86,7 @@ export default function ChapterContent({ html, language }: ChapterContentProps) 
 
     // Small delay to ensure DOM is fully settled after hydration
     setTimeout(renderMath, 0)
-  }, [html, language])
+  }, [html, language, mathMacros])
 
   return (
     <article

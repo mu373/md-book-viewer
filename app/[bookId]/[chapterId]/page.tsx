@@ -53,7 +53,7 @@ export default async function ChapterPage({ params }: PageProps) {
 
   // Get chapter content and process markdown
   const content = getChapterContent(book, chapter)
-  const { html, toc } = await processMarkdown(content)
+  const { html, toc, mathMacros } = await processMarkdown(content)
 
   // Get navigation chapters
   const previousChapter = getPreviousChapter(bookId, chapterId)
@@ -74,7 +74,7 @@ export default async function ChapterPage({ params }: PageProps) {
       <main className="lg:pl-72 xl:pr-60">
         <div className="max-w-3xl mx-auto px-6 py-16 lg:py-8 lg:px-12 overflow-x-hidden">
           {/* Chapter Content */}
-          <ChapterContent html={html} language={book.language} />
+          <ChapterContent html={html} language={book.language} mathMacros={mathMacros} />
           {SETTINGS_CONFIG.searchHighlight.enabled && <SearchHighlighter />}
 
           {/* Bottom Navigation */}

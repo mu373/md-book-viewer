@@ -34,5 +34,6 @@ export interface TOCHeading {
 export interface ProcessedMarkdown {
   html: string
   toc: TOCHeading[]
+  mathMacros?: Record<string, string>
   frontmatter?: Record<string, unknown>
 }
