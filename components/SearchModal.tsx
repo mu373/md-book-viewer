@@ -73,8 +73,8 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
   // Debounced search
   useEffect(() => {
     if (!query.trim()) {
-      setResults(null)
-      return
+      const timer = setTimeout(() => setResults(null), 0)
+      return () => clearTimeout(timer)
     }
 
     const timer = setTimeout(async () => {
@@ -99,8 +99,12 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
     if (isOpen) {
       inputRef.current?.focus()
       inputRef.current?.select()
-      setSelectedIndex(0)
-      setSearchScope(currentBookId ? 'book' : 'all')
+      const timer = setTimeout(() => {
+        setSelectedIndex(0)
+        setSearchScope(currentBookId ? 'book' : 'all')
+      }, 0)
+
+      return () => clearTimeout(timer)
     }
   }, [isOpen, currentBookId])
 
