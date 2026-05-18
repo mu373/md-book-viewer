@@ -66,7 +66,7 @@ interface BookMetadata {
   chapters: Chapter[]
 }
 
-interface SearchRecord {
+interface SearchRecord extends Record<string, unknown> {
   objectID: string
   bookId: string
   bookTitle: string
@@ -180,8 +180,8 @@ async function indexBooks() {
       indexLanguages: ['ja', 'en'],
       queryLanguages: ['ja', 'en'],
       searchableAttributes: [
-        'heading',
         'content',
+        'heading',
         'chapterTitle',
         'bookTitle',
       ],

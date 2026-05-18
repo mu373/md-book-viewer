@@ -211,50 +211,54 @@ export default function SearchModal({ isOpen, onClose, currentBookId }: SearchMo
         <div className="flex-1 overflow-y-auto lg:flex-none lg:max-h-[60vh]">
           {results && results.hits.length > 0 ? (
             <ul className="py-2">
-              {results.hits.map((hit, index) => (
-                <li key={hit.objectID}>
-                  <button
-                    onClick={() => {
-                      navigateWithHighlight(hit, router)
-                      onClose()
-                    }}
-                    className={`w-full px-4 py-3 text-left hover:bg-muted transition-colors ${
-                      index === selectedIndex ? 'bg-muted' : ''
-                    }`}
-                  >
-                    {searchScope === 'all' && (
-                      <div className="text-xs text-muted-foreground truncate">
-                        {hit.bookTitle}
-                      </div>
-                    )}
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1 truncate">
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: hit._highlightResult?.chapterTitle?.value || hit.chapterTitle,
-                        }}
-                      />
-                      {hit.heading && (
-                        <>
-                          <span>›</span>
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: hit._highlightResult?.heading?.value || hit.heading,
-                            }}
-                          />
-                        </>
+              {results.hits.map((hit, index) => {
+                const snippet = hit._snippetResult?.content?.value
+
+                return (
+                  <li key={hit.objectID}>
+                    <button
+                      onClick={() => {
+                        navigateWithHighlight(hit, router)
+                        onClose()
+                      }}
+                      className={`w-full px-4 py-3 text-left hover:bg-muted transition-colors ${
+                        index === selectedIndex ? 'bg-muted' : ''
+                      }`}
+                    >
+                      {searchScope === 'all' && (
+                        <div className="text-xs text-muted-foreground truncate">
+                          {hit.bookTitle}
+                        </div>
                       )}
-                    </div>
-                    {hit._snippetResult?.content?.value?.includes('<mark>') && (
-                      <p
-                        className="text-sm text-foreground line-clamp-2 [&_mark]:bg-yellow-200 dark:[&_mark]:bg-yellow-800"
-                        dangerouslySetInnerHTML={{
-                          __html: hit._snippetResult.content.value,
-                        }}
-                      />
-                    )}
-                  </button>
-                </li>
-              ))}
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1 truncate">
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: hit._highlightResult?.chapterTitle?.value || hit.chapterTitle,
+                          }}
+                        />
+                        {hit.heading && (
+                          <>
+                            <span>›</span>
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: hit._highlightResult?.heading?.value || hit.heading,
+                              }}
+                            />
+                          </>
+                        )}
+                      </div>
+                      {snippet && (
+                        <p
+                          className="text-sm text-foreground line-clamp-2 [&_mark]:bg-yellow-200 dark:[&_mark]:bg-yellow-800"
+                          dangerouslySetInnerHTML={{
+                            __html: snippet,
+                          }}
+                        />
+                      )}
+                    </button>
+                  </li>
+                )
+              })}
             </ul>
           ) : results && results.hits.length === 0 ? (
             <div className="px-4 py-8 text-center text-muted-foreground">
