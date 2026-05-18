@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { TOCHeading, Book, Chapter } from '@/types'
 import TableOfContents from './TableOfContents'
 import Navigation from './Navigation'
 import ThemeToggle from './ThemeToggle'
-import { Menu, X, PanelLeftClose, PanelLeft } from 'lucide-react'
+import { Home, Menu, X, PanelLeftClose, PanelLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import SearchButton from './SearchButton'
 
@@ -52,6 +53,11 @@ export default function Sidebar({
 
       {/* Desktop Toggle Buttons - floats and changes icon based on state */}
       <div className="hidden lg:flex fixed bottom-4 left-4 z-50 gap-2">
+        <Button asChild variant="outline" size="icon-sm" aria-label="Home">
+          <Link href="/">
+            <Home />
+          </Link>
+        </Button>
         <SearchButton bookId={book.id} buttonOnly />
         <Button
           onClick={() => setIsCollapsed(!isCollapsed)}
@@ -92,7 +98,7 @@ export default function Sidebar({
       {/* Right Sidebar for TOC on Desktop */}
       <aside className="hidden xl:block fixed top-0 right-0 h-full w-70 overflow-y-auto">
         <div className="p-4 sticky top-0">
-          <TableOfContents toc={toc} />
+          <TableOfContents toc={toc} language={book.language} />
         </div>
       </aside>
     </>

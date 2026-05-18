@@ -21,7 +21,7 @@ export default function BudouXText({ children, language, className }: BudouXText
 
   if (language === 'ja' && segments) {
     return (
-      <span className={className} style={{ wordBreak: 'keep-all', overflowWrap: 'anywhere' }}>
+      <span className={className} lang={language} style={{ wordBreak: 'keep-all', overflowWrap: 'anywhere' }}>
         {segments.map((seg, i) => (
           <span key={i}>
             {seg}
@@ -32,5 +32,5 @@ export default function BudouXText({ children, language, className }: BudouXText
     )
   }
 
-  return <span className={className}>{children}</span>
+  return <span className={className} lang={language}>{children}</span>
 }

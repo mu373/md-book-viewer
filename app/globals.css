@@ -53,7 +53,7 @@
 
 /* Japanese text typography */
 [lang="ja"] {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans CJK JP", "Noto Sans JP", "Meiryo", sans-serif;
   line-height: 1.5em;
   letter-spacing: 0.01em;
 }
@@ -76,8 +76,13 @@ pre:has(code.language-math) {
   background: transparent !important;
   padding: 0 !important;
   border-radius: 0 !important;
+  font-size: 95% !important;
   margin: 1em 0 !important;
   overflow: visible !important;
+}
+
+.markdown-content[lang="en"] pre:has(code.language-math.math-display) {
+  font-size: 105% !important;
 }
 
 /* Long equations can scroll horizontally (scrollbar hidden) */
@@ -226,6 +231,12 @@ pre:has(code.language-math) {
   color: #24292f;
 }
 
+.markdown-content[lang="en"] {
+  font-size: 14.5px;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+
 .markdown-content h1 {
   font-size: 2em;
   font-weight: 600;
@@ -237,18 +248,20 @@ pre:has(code.language-math) {
 .markdown-content h2 {
   font-size: 1.8em;
   font-weight: 600;
+  line-height: 1.1;
   margin-top: 24px;
   margin-bottom: 16px;
-  padding-bottom: 0.1em;
+  padding-bottom: 8px;
   border-bottom: 1px solid #d0d7de;
 }
 
 .markdown-content h3 {
   font-size: 1.4em;
   font-weight: 600;
+  line-height: 1.1;
   margin-top: 30px;
   margin-bottom: 16px;
-  padding-bottom: 0.3em;
+  padding-bottom: 8px;
   border-bottom: 1px solid #d0d7de;
 }
 
@@ -270,6 +283,13 @@ pre:has(code.language-math) {
 .markdown-content p {
   margin-top: 0;
   margin-bottom: 10px;
+}
+
+.markdown-content[lang="en"] p {
+  margin-bottom: 1em;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 .markdown-content a {
@@ -336,12 +356,20 @@ pre:has(code.language-math) {
   margin-top: 0.25em;
 }
 
+.markdown-content .table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
 .markdown-content table {
   border-spacing: 0;
   border-collapse: collapse;
-  width: 100%;
-  margin-top: 0;
-  margin-bottom: 16px;
+  width: max-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .markdown-content table tr {
@@ -384,10 +412,13 @@ pre:has(code.language-math) {
   color: #c9d1d9;
 }
 
-.dark .markdown-content {
-  h2, h3 {
-    border-bottom-color: #21262d;
-  }
+.dark .markdown-content h2 {
+  border-bottom-color: #21262d;
+}
+
+.dark .markdown-content h3 {
+  border-bottom-color: transparent;
+  box-shadow: inset 0 -1px 0 #21262d;
 }
 
 .dark .markdown-content a {
@@ -424,12 +455,12 @@ pre:has(code.language-math) {
 }
 
 .dark .markdown-content table tr {
-  background-color: #0d1117;
+  background-color: transparent;
   border-top-color: #21262d;
 }
 
 .dark .markdown-content table tr:nth-child(2n) {
-  background-color: #161b22;
+  background-color: transparent;
 }
 
 .dark .markdown-content table th,
@@ -438,7 +469,7 @@ pre:has(code.language-math) {
 }
 
 .dark .markdown-content table th {
-  background-color: #161b22;
+  background-color: rgba(255, 255, 255, 0.03);
 }
 
 .dark .markdown-content hr {

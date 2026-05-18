@@ -9,6 +9,7 @@ import rehypeStringify from 'rehype-stringify'
 import matter from 'gray-matter'
 import { remarkJapaneseIndent } from './remark-japanese-indent'
 import { remarkSingleLineBreaks } from './remark-single-line-breaks'
+import { rehypeWrapTables } from './rehype-wrap-tables'
 import { remarkExtractTOC } from './toc'
 import type { ProcessedMarkdown, TOCHeading } from '@/types'
 
@@ -32,6 +33,7 @@ export async function processMarkdown(content: string): Promise<ProcessedMarkdow
     .use(remarkExtractTOC, { toc }) // Extract TOC and add IDs to headings
     .use(remarkRehype, { allowDangerousHtml: true }) // Convert to HTML AST
     .use(rehypeRaw) // Support raw HTML in markdown
+    .use(rehypeWrapTables) // Keep tables scrollable without changing table layout
     // Note: Math will be rendered client-side by KaTeX
     .use(rehypeShiki, {
       themes: {
@@ -48,4 +50,3 @@ export async function processMarkdown(content: string): Promise<ProcessedMarkdow
     frontmatter: Object.keys(frontmatter).length > 0 ? frontmatter : undefined,
   }
 }
-

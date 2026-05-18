@@ -5,10 +5,12 @@ import { TOCHeading } from '@/types'
 
 interface TableOfContentsProps {
   toc: TOCHeading[]
+  language?: string
 }
 
-export default function TableOfContents({ toc }: TableOfContentsProps) {
+export default function TableOfContents({ toc, language }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>('')
+  const textSizeClass = language === 'en' ? 'text-sm' : 'text-xs'
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -66,7 +68,7 @@ export default function TableOfContents({ toc }: TableOfContentsProps) {
           href={`#${heading.id}`}
           onClick={(e) => handleClick(e, heading.id)}
           className={`
-            block py-1 text-xs transition-colors rounded-sm px-2
+            block py-1 ${textSizeClass} transition-colors rounded-sm px-2
             hover:text-foreground
             ${
               isActive
@@ -79,7 +81,7 @@ export default function TableOfContents({ toc }: TableOfContentsProps) {
           {heading.text}
         </a>
         {heading.children && heading.children.length > 0 && (
-          <ul className="space-y-0.5">
+          <ul>
             {heading.children.map((child) => renderHeading(child))}
           </ul>
         )}
@@ -89,7 +91,7 @@ export default function TableOfContents({ toc }: TableOfContentsProps) {
 
   return (
     <nav className="space-y-1" aria-label="Table of contents">
-      <ul className="space-y-0.5">
+      <ul>
         {toc.map((heading) => renderHeading(heading))}
       </ul>
     </nav>

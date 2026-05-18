@@ -12,6 +12,7 @@ export default function Navigation({
   book,
   currentChapter,
 }: NavigationProps) {
+  const textSizeClass = book.language === 'en' ? 'text-sm' : 'text-xs'
   const visibleChapters = book.chapters
     .filter(ch => !ch.hidden)
     .sort((a, b) => a.order - b.order)
@@ -25,15 +26,15 @@ export default function Navigation({
       <div className="px-2">
         <Link
           href={firstChapter ? `/${book.id}/${firstChapter.id}` : '/'}
-          className="text-xs font-semibold text-foreground hover:text-primary transition-colors"
+          className={`${textSizeClass} font-semibold text-foreground hover:text-primary transition-colors`}
         >
           {book.title}
         </Link>
       </div>
 
       {/* Chapter List */}
-      <nav className="space-y-0.5">
-        <ul className="space-y-0.5">
+      <nav>
+        <ul>
           {visibleChapters.map((chapter) => {
             const isCurrent = chapter.id === currentChapter.id
 
@@ -42,7 +43,7 @@ export default function Navigation({
                 <Link
                   href={`/${book.id}/${chapter.id}`}
                   className={`
-                    block px-2 py-1.5 text-xs rounded-sm transition-colors
+                    block px-2 py-1 ${textSizeClass} rounded-sm transition-colors
                     ${
                       isCurrent
                         ? 'text-foreground font-medium'
