@@ -16,7 +16,7 @@ ENV NEXT_PUBLIC_ALGOLIA_APP_ID=$NEXT_PUBLIC_ALGOLIA_APP_ID
 ENV NEXT_PUBLIC_ALGOLIA_SEARCH_KEY=$NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
 ENV NEXT_PUBLIC_ALGOLIA_INDEX_NAME=$NEXT_PUBLIC_ALGOLIA_INDEX_NAME
 
-COPY package*.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # Copy application code
@@ -39,7 +39,8 @@ RUN if [ ! -d "./books" ]; then \
 RUN pnpm build
 
 # Production stage with Bun
-FROM oven/bun:alpine AS runner
+FROM oven/bun:1-alpine AS runner
+RUN apk upgrade --no-cache
 WORKDIR /app
 
 # Copy built files from build stage
