@@ -43,10 +43,13 @@ FROM oven/bun:alpine AS runner
 WORKDIR /app
 
 # Copy built files from build stage
-COPY --from=build /usr/src/app/out ./out
+COPY --from=build --chown=bun:bun /usr/src/app/out ./out
 
 # Copy server script
-COPY --from=build /usr/src/app/server.ts ./server.ts
+COPY --from=build --chown=bun:bun /usr/src/app/server.ts ./server.ts
+COPY --from=build --chown=bun:bun /usr/src/app/node_modules/hono ./node_modules/hono
+
+USER bun
 
 # Expose port
 EXPOSE 3000
