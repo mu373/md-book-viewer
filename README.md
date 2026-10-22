@@ -371,6 +371,28 @@ Run `pnpm index` whenever you:
 - Update existing content
 - Change the books configuration
 
+The script uploads records to a temporary index and switches the live index only
+after the upload completes. Missing book or chapter files and an empty record set
+stop the run before it changes Algolia. Existing records remain searchable if the
+upload fails. The temporary index needs room for a second copy of the records.
+
+### Daily indexing on this host
+
+The host's user crontab runs the indexer daily at 06:00 America/New_York, the host
+timezone. `flock` prevents overlapping scheduled runs. The job reads local book
+files without pulling changes from their repositories. Output from the latest
+run is saved in `~/.local/state/md-book-algolia.log`.
+
+```cron
+0 6 * * * /usr/bin/flock -n /home/minami/.cache/md-book-algolia.lock /bin/sh -c 'cd /home/minami/docker/md-book-viewer && /home/minami/.config/nvm/versions/node/v24.20.0/bin/node node_modules/tsx/dist/cli.mjs scripts/index-algolia.ts' > /home/minami/.local/state/md-book-algolia.log 2>&1
+```
+
+Update the cron entry if the repository or Node installation moves. The host must
+be running at the scheduled time. To run an update manually without overlapping
+cron, run the command after the five schedule fields above.
+
+Run the input safety checks with `node --import tsx --test scripts/index-algolia.test.ts`.
+
 ### Search Features
 
 - Press `⌘K` (Mac) or `Ctrl+K` (Windows/Linux) to open search

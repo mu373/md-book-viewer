@@ -6,7 +6,7 @@
  * and pushes searchable records to Algolia.
  *
  * Usage:
- *   pnpm index:algolia
+ *   pnpm index
  *
  * Required environment variables:
  *   ALGOLIA_APP_ID - Your Algolia application ID
@@ -44,8 +44,8 @@ const indexName = process.env.ALGOLIA_INDEX_NAME || 'md-book-viewer'
 if (!appId || !adminKey) {
   console.error('Error: ALGOLIA_APP_ID and ALGOLIA_ADMIN_KEY environment variables are required')
   console.error('')
-  console.error('Set them in .env.local or pass them directly:')
-  console.error('  ALGOLIA_APP_ID=xxx ALGOLIA_ADMIN_KEY=xxx pnpm index:algolia')
+  console.error('Set them in .env or pass them directly:')
+  console.error('  ALGOLIA_APP_ID=xxx ALGOLIA_ADMIN_KEY=xxx pnpm index')
   process.exit(1)
 }
 
@@ -93,23 +93,11 @@ function expandPath(filepath: string): string {
   return filepath
 }
 
-function loadBookMetadata(bookPath: string): { metadata: BookMetadata; basePath: string } | null {
+function loadBookMetadata(bookPath: string): { metadata: BookMetadata; basePath: string } {
   const expandedPath = expandPath(bookPath)
   const metadataPath = path.join(expandedPath, 'book.json')
-
-  if (!fs.existsSync(metadataPath)) {
-    console.warn(`Warning: book.json not found at ${metadataPath}`)
-    return null
-  }
-
-  try {
-    const content = fs.readFileSync(metadataPath, 'utf-8')
-    const metadata = JSON.parse(content) as BookMetadata
-    return { metadata, basePath: expandedPath }
-  } catch (error) {
-    console.error(`Error loading ${metadataPath}:`, error)
-    return null
-  }
+  const metadata: BookMetadata = JSON.parse(fs.readFileSync(metadataPath, 'utf-8'))
+  return { metadata, basePath: expandedPath }
 }
 
 async function indexBooks() {
@@ -120,7 +108,6 @@ async function indexBooks() {
 
   for (const bookPath of BOOKS_CONFIG) {
     const result = loadBookMetadata(bookPath)
-    if (!result) continue
 
     const { metadata, basePath } = result
     console.log(`Processing book: ${metadata.title} (${metadata.id})`)
@@ -132,11 +119,6 @@ async function indexBooks() {
       }
 
       const chapterPath = path.join(basePath, chapter.file)
-      if (!fs.existsSync(chapterPath)) {
-        console.warn(`  Warning: Chapter file not found: ${chapterPath}`)
-        continue
-      }
-
       const content = fs.readFileSync(chapterPath, 'utf-8')
       const chunks = chunkByHeadings(content)
 
@@ -168,13 +150,12 @@ async function indexBooks() {
   console.log(`Total records: ${records.length}`)
 
   if (records.length === 0) {
-    console.log('No records to index')
-    return
+    throw new Error('No records to index; keeping the existing index')
   }
 
   // Configure index settings
   console.log('Configuring index settings...')
-  await client.setSettings({
+  const settingsTask = await client.setSettings({
     indexName,
     indexSettings: {
       indexLanguages: ['ja', 'en'],
@@ -201,35 +182,37 @@ async function indexBooks() {
     },
   })
 
+  await client.waitForTask({ indexName, taskID: settingsTask.taskID })
+
   // Load and save synonyms
   const synonymsPath = path.resolve(process.cwd(), 'config/synonyms.json')
   if (fs.existsSync(synonymsPath)) {
     console.log('Loading synonyms...')
     const synonymsConfig = JSON.parse(fs.readFileSync(synonymsPath, 'utf-8'))
     if (synonymsConfig.synonyms?.length > 0) {
-      await client.clearSynonyms({ indexName })
-      await client.saveSynonyms({
+      const synonymsTask = await client.saveSynonyms({
         indexName,
+        replaceExistingSynonyms: true,
         synonymHit: synonymsConfig.synonyms.map((s: Record<string, unknown>, i: number) => ({
           ...s,
           objectID: `synonym-${i}`,
         })),
       })
+      await client.waitForTask({ indexName, taskID: synonymsTask.taskID })
       console.log(`Saved ${synonymsConfig.synonyms.length} synonyms`)
     }
   }
 
-  // Clear existing records and save new ones
+  // Keep the live index until the temporary index is fully uploaded.
   console.log('Uploading records to Algolia...')
-  await client.clearObjects({ indexName })
-  const response = await client.saveObjects({
+  const response = await client.replaceAllObjects({
     indexName,
     objects: records,
   })
 
   console.log('')
   console.log(`Successfully indexed ${records.length} records`)
-  console.log(`Task IDs: ${response.map(r => r.taskID).join(', ')}`)
+  console.log(`Completed replacement task: ${response.moveOperationResponse.taskID}`)
 }
 
 indexBooks().catch((error) => {
